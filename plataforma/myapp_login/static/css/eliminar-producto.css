@@ -1,0 +1,536 @@
+/* Estilos específicos para eliminar producto - basado en el diseño del inventario */
+
+/* Contenedor principal */
+.eliminar-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 80vh;
+    padding: 2rem 0;
+}
+
+/* Header de eliminación */
+.eliminar-header {
+    background: linear-gradient(135deg, #ff6b6b 0%, #dc3545 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+    color: white;
+    text-align: center;
+}
+
+.eliminar-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.eliminar-title i {
+    font-size: 2.5rem;
+    animation: warning-pulse 2s infinite;
+}
+
+@keyframes warning-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Alerta principal */
+.alerta-principal {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 2px solid #dc2626;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    color: #991b1b;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(220, 53, 69, 0.2);
+}
+
+.alerta-principal i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    animation: shake 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes shake {
+    0% { transform: translateX(-2px); }
+    100% { transform: translateX(2px); }
+}
+
+.alerta-principal h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+/* Panel de información del producto */
+.producto-eliminar-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #dc3545;
+}
+
+.producto-eliminar-title {
+    color: #dc3545;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.producto-eliminar-title i {
+    font-size: 1.3rem;
+}
+
+/* Grid de información del producto */
+.producto-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.info-item-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+}
+
+.info-item-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.badge-stock {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-alto { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; }
+.badge-medio { background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); color: #856404; }
+.badge-bajo { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; }
+
+/* Descripción del producto */
+.producto-descripcion {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 4px solid #2196f3;
+    margin-top: 1rem;
+}
+
+.descripcion-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1565c0;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.descripcion-text {
+    color: #0d47a1;
+    font-style: italic;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Panel de consecuencias */
+.consecuencias-panel {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.2);
+}
+
+.consecuencias-title {
+    color: #92400e;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.consecuencias-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.consecuencias-list li {
+    color: #92400e;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-bottom: 1px solid rgba(146, 64, 14, 0.2);
+}
+
+.consecuencias-list li:last-child {
+    border-bottom: none;
+}
+
+.consecuencias-list li::before {
+    content: '⚠';
+    font-size: 1.2rem;
+    color: #f59e0b;
+}
+
+/* Formulario de confirmación */
+.confirmacion-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.confirmacion-title {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.confirmacion-instruccion {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #6b7280;
+}
+
+.confirmacion-instruccion p {
+    margin: 0;
+    color: #374151;
+    font-weight: 500;
+}
+
+.nombre-requerido {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Campo de confirmación */
+.form-group-confirmacion {
+    margin-bottom: 2rem;
+}
+
+.form-label-confirmacion {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.form-control-confirmacion {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 3px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+.form-control-confirmacion:focus {
+    outline: none;
+    border-color: #dc3545;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-control-confirmacion.is-valid {
+    border-color: #28a745;
+    background-color: #f0f9f0;
+}
+
+.form-control-confirmacion.is-invalid {
+    border-color: #dc3545;
+    background-color: #fdf2f2;
+}
+
+.form-text-danger {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #dc3545;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Controles de acción */
+.controles-eliminacion {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Botones */
+.btn {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-danger-eliminar {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+.btn-danger-eliminar:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.6);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-danger-eliminar:disabled {
+    background: #6c757d;
+    color: #adb5bd;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-outline-primary {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.btn-outline-primary:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    text-decoration: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .eliminar-container {
+        padding: 1rem;
+    }
+    
+    .eliminar-header {
+        padding: 1.5rem;
+    }
+    
+    .eliminar-title {
+        font-size: 1.8rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .producto-eliminar-panel {
+        padding: 1.5rem;
+    }
+    
+    .producto-info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .confirmacion-container {
+        padding: 1.5rem;
+    }
+    
+    .controles-eliminacion {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+    
+    .btn {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .eliminar-header {
+        padding: 1rem;
+    }
+    
+    .eliminar-title {
+        font-size: 1.5rem;
+    }
+    
+    .producto-eliminar-panel {
+        padding: 1rem;
+    }
+    
+    .confirmacion-container {
+        padding: 1rem;
+    }
+    
+    .form-control-confirmacion {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animaciones */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.eliminar-container > * {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.eliminar-header {
+    animation-delay: 0.1s;
+}
+
+.alerta-principal {
+    animation-delay: 0.2s;
+}
+
+.producto-eliminar-panel {
+    animation-delay: 0.3s;
+}
+
+.consecuencias-panel {
+    animation-delay: 0.4s;
+}
+
+.confirmacion-container {
+    animation-delay: 0.5s;
+}
+
+.controles-eliminacion {
+    animation-delay: 0.6s;
+}
+
+/* Efectos especiales para botón de eliminar */
+.btn-danger-eliminar.confirmado {
+    animation: danger-pulse 0.5s ease-in-out;
+}
+
+@keyframes danger-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Estado de loading para el botón */
+.btn-loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

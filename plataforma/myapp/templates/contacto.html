@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contacto - Mi Plataforma{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contacto.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="contacto-container">
+    <div class="container">
+        <!-- Header del formulario -->
+        <div class="contacto-header">
+            <h1 class="contacto-title">
+                <i class="fas fa-envelope"></i>
+                Contáctanos
+            </h1>
+            <p class="contacto-subtitle">
+                Nos encantaría escuchar de ti. Envíanos un mensaje y te responderemos pronto.
+            </p>
+        </div>
+
+        <!-- Formulario de contacto -->
+        <div class="contacto-form-container">
+            <form method="post" id="contactoForm" novalidate>
+                {% csrf_token %}
+                
+                <!-- Campo Nombre -->
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}" class="form-label">
+                        <i class="fas fa-user"></i>
+                        {{ form.nombre.label }}
+                        <span class="required">*</span>
+                    </label>
+                    {{ form.nombre }}
+                    <div class="form-feedback"></div>
+                    <small class="form-text">Ingresa tu nombre completo</small>
+                </div>
+
+                <!-- Campo Correo -->
+                <div class="form-group">
+                    <label for="{{ form.correo.id_for_label }}" class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        {{ form.correo.label }}
+                        <span class="required">*</span>
+                    </label>
+                    {{ form.correo }}
+                    <div class="form-feedback"></div>
+                    <small class="form-text">Usaremos este correo para responderte</small>
+                </div>
+
+                <!-- Campo Mensaje -->
+                <div class="form-group">
+                    <label for="{{ form.mensaje.id_for_label }}" class="form-label">
+                        <i class="fas fa-comment"></i>
+                        {{ form.mensaje.label }}
+                        <span class="required">*</span>
+                    </label>
+                    {{ form.mensaje }}
+                    <div class="form-feedback"></div>
+                    <small class="form-text">Cuéntanos qué tienes en mente</small>
+                </div>
+
+                <!-- Botón de envío -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="contacto-info">
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <h3>Tiempo de Respuesta</h3>
+                <p>Normalmente respondemos en menos de 24 horas</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Privacidad</h3>
+                <p>Tu información está completamente segura con nosotros</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-heart"></i>
+                <h3>Soporte</h3>
+                <p>Estamos aquí para ayudarte en lo que necesites</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/contacto.js' %}"></script>
+{% endblock %}

@@ -28,6 +28,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'myapp_login.CustomUser'
+
+# Configuración de autenticación obligatoria
+LOGIN_URL = '/panel/login/'           # Página de login obligatoria para @login_required
+LOGIN_REDIRECT_URL = '/panel/index/'  # Página principal de autos tras login
+LOGOUT_REDIRECT_URL = '/panel/login/' # Página de login tras logout
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 # Application definition
 
@@ -39,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'myapp_login'
 ]
 
 MIDDLEWARE = [
@@ -117,9 +130,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'myapp/static'),
+    os.path.join(BASE_DIR, 'myapp_login/static'),
 ]
 # Configuración de archivos multimedia
 MEDIA_URL = '/media/'

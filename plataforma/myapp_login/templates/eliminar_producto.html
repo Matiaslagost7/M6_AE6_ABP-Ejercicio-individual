@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Eliminar Producto - Panel de Administración{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/eliminar-producto.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="eliminar-container">
+    <div class="container">
+        <!-- Header de eliminación -->
+        <div class="eliminar-header">
+            <h1 class="eliminar-title">
+                <i class="fas fa-exclamation-triangle"></i>
+                Eliminar Producto
+            </h1>
+            <p style="margin: 0.5rem 0 0 0; font-size: 1.1rem; opacity: 0.9;">
+                Esta acción es irreversible y eliminará permanentemente el producto
+            </p>
+        </div>
+
+        <!-- Alerta principal -->
+        <div class="alerta-principal">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>¡ATENCIÓN! ACCIÓN IRREVERSIBLE</h3>
+            <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">
+                Una vez eliminado, no podrás recuperar este producto ni su información
+            </p>
+        </div>
+
+        <!-- Panel de información del producto -->
+        <div class="producto-eliminar-panel">
+            <h2 class="producto-eliminar-title">
+                <i class="fas fa-tag"></i>
+                {{ producto.nombre }}
+            </h2>
+            
+            <div class="producto-info-grid">
+                <div class="info-item">
+                    <div class="info-item-label">ID del Producto</div>
+                    <div class="info-item-value">
+                        <i class="fas fa-hashtag"></i>
+                        {{ producto.id }}
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-item-label">Precio</div>
+                    <div class="info-item-value">
+                        <i class="fas fa-dollar-sign"></i>
+                        ${{ producto.precio|floatformat:2 }}
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-item-label">Stock Disponible</div>
+                    <div class="info-item-value">
+                        <i class="fas fa-boxes"></i>
+                        <span class="badge-stock {% if producto.stock > 10 %}badge-alto{% elif producto.stock > 5 %}badge-medio{% else %}badge-bajo{% endif %}">
+                            {{ producto.stock }} unidades
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-item-label">Fecha de Creación</div>
+                    <div class="info-item-value">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ producto.fecha_creacion|date:"d/m/Y H:i"|default:"No disponible" }}
+                    </div>
+                </div>
+            </div>
+
+            {% if producto.descripcion %}
+            <div class="producto-descripcion">
+                <div class="descripcion-label">Descripción del Producto</div>
+                <p class="descripcion-text">{{ producto.descripcion }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Panel de consecuencias -->
+        <div class="consecuencias-panel">
+            <h3 class="consecuencias-title">
+                <i class="fas fa-info-circle"></i>
+                Consecuencias de la Eliminación
+            </h3>
+            <ul class="consecuencias-list">
+                <li>Se perderá toda la información del producto de forma permanente</li>
+                <li>El historial de ventas relacionado podría verse afectado</li>
+                <li>No será posible recuperar los datos una vez eliminados</li>
+                <li>Las referencias a este producto en otros registros quedarán vacías</li>
+            </ul>
+        </div>
+
+        <!-- Formulario de confirmación -->
+        <div class="confirmacion-container">
+            <h3 class="confirmacion-title">
+                <i class="fas fa-shield-alt"></i>
+                Confirmación Requerida
+            </h3>
+            
+            <div class="confirmacion-instruccion">
+                <p>
+                    Para confirmar la eliminación, debes escribir exactamente el nombre del producto: 
+                    <span class="nombre-requerido">{{ producto.nombre }}</span>
+                </p>
+            </div>
+
+            <form method="post" id="formEliminar">
+                {% csrf_token %}
+                
+                <div class="form-group-confirmacion">
+                    <label for="confirmacion" class="form-label-confirmacion">
+                        <i class="fas fa-keyboard"></i>
+                        Escribe el nombre del producto para confirmar:
+                    </label>
+                    <input type="text" 
+                           class="form-control-confirmacion" 
+                           id="confirmacion" 
+                           name="confirmacion" 
+                           placeholder="Escribe exactamente: {{ producto.nombre }}"
+                           autocomplete="off"
+                           required>
+                    <div class="form-text-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Este campo es obligatorio y debe coincidir exactamente con el nombre del producto
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Controles de acción -->
+        <div class="controles-eliminacion">
+            <a href="{% url 'panel:inventario' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Cancelar y Volver al Inventario
+            </a>
+            
+            <div style="display: flex; gap: 1rem;">
+                <a href="{% url 'panel:editar_producto' producto.id %}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i>
+                    Editar en su Lugar
+                </a>
+                
+                <button type="submit" form="formEliminar" class="btn btn-danger-eliminar" id="btnEliminar" disabled>
+                    <i class="fas fa-trash"></i>
+                    Confirmar Eliminación
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/eliminar-producto.js' %}"></script>
+<script>
+// Inicializar la funcionalidad con el nombre del producto
+initEliminarProducto("{{ producto.nombre }}");
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contacto Exitoso{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="success-container">
+            <h1>¡Gracias, {{ nombre }}!</h1>
+            <p>Hemos recibido tu mensaje con éxito.</p>
+            <div class="btn-group">
+                <a class="btn btn-primary" href="{% url 'contacto' %}">Volver al formulario de contacto</a>
+                <a class="btn btn-primary" href="{% url 'index' %}">Volver a la página principal</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

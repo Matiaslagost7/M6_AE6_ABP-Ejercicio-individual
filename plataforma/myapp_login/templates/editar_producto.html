@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Editar Producto - Panel de Administración{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/editar-producto.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="editar-container">
+    <div class="container">
+        <!-- Header del formulario -->
+        <div class="editar-header">
+            <h1 class="editar-title">
+                <i class="fas fa-edit"></i>
+                Editar Producto
+            </h1>
+        </div>
+
+        <!-- Panel de información del producto actual -->
+        <div class="producto-info-panel">
+            <h3 class="producto-info-title">
+                <i class="fas fa-info-circle"></i>
+                Información Actual del Producto
+            </h3>
+            <div class="producto-info-item">
+                <span class="producto-info-label">ID del Producto:</span>
+                <span class="producto-info-value">#{{ producto.id }}</span>
+            </div>
+            <div class="producto-info-item">
+                <span class="producto-info-label">Fecha de Registro:</span>
+                <span class="producto-info-value">{{ producto.fecha_creacion|date:"d/m/Y H:i"|default:"No disponible" }}</span>
+            </div>
+            <div class="producto-info-item">
+                <span class="producto-info-label">Estado Actual:</span>
+                <span class="producto-info-value">
+                    {% if producto.activo|default:True %}
+                        <i class="fas fa-check-circle" style="color: #27ae60;"></i> Activo
+                    {% else %}
+                        <i class="fas fa-times-circle" style="color: #e74c3c;"></i> Inactivo
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <!-- Formulario de edición -->
+        <div class="formulario-container">
+            <form method="post" id="editarProductoForm" novalidate>
+                {% csrf_token %}
+
+                <!-- Campos principales en grid -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">
+                            <i class="fas fa-tag"></i>
+                            Nombre del Producto
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" 
+                               value="{{ producto.nombre }}" required 
+                               placeholder="Ej: Laptop Dell Inspiron">
+                        <small class="form-text">Ingrese un nombre descriptivo para el producto</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria" class="form-label">
+                            <i class="fas fa-list"></i>
+                            Categoría
+                        </label>
+                        <select id="categoria" name="categoria" class="form-control">
+                            <option value="">Seleccionar categoría</option>
+                            <option value="electronica" {% if producto.categoria == 'electronica' %}selected{% endif %}>Electrónica</option>
+                            <option value="ropa" {% if producto.categoria == 'ropa' %}selected{% endif %}>Ropa</option>
+                            <option value="hogar" {% if producto.categoria == 'hogar' %}selected{% endif %}>Hogar</option>
+                            <option value="deportes" {% if producto.categoria == 'deportes' %}selected{% endif %}>Deportes</option>
+                            <option value="libros" {% if producto.categoria == 'libros' %}selected{% endif %}>Libros</option>
+                            <option value="otros" {% if producto.categoria == 'otros' %}selected{% endif %}>Otros</option>
+                        </select>
+                        <small class="form-text">Seleccione la categoría del producto</small>
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="form-group">
+                    <label for="descripcion" class="form-label">
+                        <i class="fas fa-align-left"></i>
+                        Descripción
+                    </label>
+                    <textarea id="descripcion" name="descripcion" class="form-control" 
+                              placeholder="Describe las características principales del producto...">{{ producto.descripcion }}</textarea>
+                    <small class="form-text">Proporcione una descripción detallada del producto</small>
+                </div>
+
+                <!-- Precio y Stock -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="precio" class="form-label">
+                            <i class="fas fa-dollar-sign"></i>
+                            Precio
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" id="precio" name="precio" class="form-control" 
+                                   value="{{ producto.precio }}" step="0.01" min="0" required
+                                   placeholder="0.00">
+                        </div>
+                        <small class="form-text">Ingrese el precio del producto en pesos</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cantidad" class="form-label">
+                            <i class="fas fa-boxes"></i>
+                            Stock Disponible
+                            <span class="required">*</span>
+                        </label>
+                        <input type="number" id="cantidad" name="cantidad" class="form-control" 
+                               value="{{ producto.cantidad }}" min="0" required
+                               placeholder="0">
+                        <small class="form-text">Cantidad disponible en inventario</small>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Controles de acción -->
+        <div class="controles-container">
+            <a href="{% url 'panel:inventario' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Inventario
+            </a>
+            
+            <div style="display: flex; gap: 1rem;">
+                <a href="{% url 'panel:eliminar_producto' producto.id %}" class="btn btn-danger" 
+                   onclick="return confirm('¿Está seguro de que desea eliminar este producto? Esta acción no se puede deshacer.')">
+                    <i class="fas fa-trash"></i>
+                    Eliminar Producto
+                </a>
+                
+                <button type="submit" form="editarProductoForm" class="btn btn-primary" id="btnGuardar">
+                    <i class="fas fa-save"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/editar-producto.js' %}"></script>
+{% endblock %}

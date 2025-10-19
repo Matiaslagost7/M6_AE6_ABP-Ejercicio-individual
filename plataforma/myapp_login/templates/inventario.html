@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Inventario - Mi Plataforma{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/inventario.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="inventario-container">
+    <!-- Header del inventario -->
+    <div class="container">
+        <div class="inventario-header">
+            <h1 class="inventario-title">
+                <i class="fas fa-boxes"></i>
+                Inventario de Productos
+            </h1>
+        </div>
+
+        <!-- Estadísticas del inventario -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">{{ productos|length }}</div>
+                <div class="stat-label">Total Productos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ productos|length }}</div>
+                <div class="stat-label">En Stock</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Stock Bajo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Sin Stock</div>
+            </div>
+        </div>
+
+        <!-- Controles del inventario -->
+        <div class="inventario-controls">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput">
+            </div>
+            <a href="{% url 'panel:crear_producto' %}" class="btn-agregar">
+                <i class="fas fa-plus"></i>
+                Agregar Producto
+            </a>
+        </div>
+
+        <!-- Tabla de productos -->
+        {% if productos %}
+        <div class="productos-table-container">
+            <table class="productos-table" id="productosTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>
+                            <span class="producto-id">#{{ producto.id }}</span>
+                        </td>
+                        <td>
+                            <div class="producto-nombre">{{ producto.nombre }}</div>
+                        </td>
+                        <td>
+                            <span class="producto-precio">${{ producto.precio|floatformat:2 }}</span>
+                        </td>
+                        <td>
+                            <span class="producto-stock {% if producto.stock > 10 %}stock-alto{% elif producto.stock > 5 %}stock-medio{% else %}stock-bajo{% endif %}">
+                                {{ producto.stock }} unidades
+                            </span>
+                        </td>
+                        <td>
+                            <div class="acciones-container">
+                                <a href="{% url 'panel:editar_producto' producto.id %}" class="btn-accion btn-editar">
+                                    <i class="fas fa-edit"></i>
+                                    Editar
+                                </a>
+                                <a href="{% url 'panel:eliminar_producto' producto.id %}" class="btn-accion btn-eliminar">
+                                    <i class="fas fa-trash"></i>
+                                    Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <!-- Estado vacío -->
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <h3 class="empty-state-title">No hay productos en el inventario</h3>
+            <p class="empty-state-text">Comienza agregando tu primer producto al inventario.</p>
+            <a href="{% url 'panel:crear_producto' %}" class="btn-agregar">
+                <i class="fas fa-plus"></i>
+                Agregar Primer Producto
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/inventario.js' %}"></script>
+{% endblock %}

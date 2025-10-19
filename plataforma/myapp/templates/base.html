@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mi Plataforma{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>Mi Plataforma</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Inicio</a></li>
+                <li><a href="#">Catalogo</a></li>
+                <li><a href="{% url 'contacto' %}">Contacto</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'panel:inventario' %}">Inventario</a></li>
+                {% endif %}
+                <!-- User Menu -->
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'panel:logout' %}">Cerrar Sesión ({{ user.username }})</a></li>
+                {% else %}
+                <li><a href="{% url 'panel:login' %}">Iniciar Sesión</a></li>
+                <li><a href="{% url 'panel:register' %}">Registrarse</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Contenido principal -->
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; {{ year|default:2024 }} Mi Plataforma</p>
+    </footer>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
