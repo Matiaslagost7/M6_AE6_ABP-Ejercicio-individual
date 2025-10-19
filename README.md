@@ -29,7 +29,7 @@ Este proyecto es una **plataforma web de gestión de inventario** desarrollada e
 
 #### **Mati7**
 - **Tipo**: SuperUser
-- **Contraseña**: Mati2000
+- **Contraseña**: Mati2000 (mismo para todos los usuarios)
 - **Permisos**: 
   - Acceso completo al panel administrativo
   - Puede crear, editar y eliminar usuarios
