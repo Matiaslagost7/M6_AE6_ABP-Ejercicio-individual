@@ -31,9 +31,14 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'myapp_login.CustomUser'
 
 # Configuración de autenticación obligatoria
-LOGIN_URL = '/panel/login/'           # Página de login obligatoria para @login_required
+LOGIN_URL = '/panel/login/'           # Página de login obligatoria
 LOGIN_REDIRECT_URL = '/panel/index/'  # Página principal de autos tras login
 LOGOUT_REDIRECT_URL = '/panel/login/' # Página de login tras logout
+
+# Configuración adicional de seguridad para el admin
+ADMIN_URL_PREFIX = 'admin/'  # Prefijo del admin (puedes cambiarlo por seguridad)
+SESSION_COOKIE_AGE = 3600    # Sesión expira en 1 hora
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cerrar sesión al cerrar navegador
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',

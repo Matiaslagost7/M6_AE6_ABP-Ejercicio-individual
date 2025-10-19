@@ -5,7 +5,6 @@ from django.contrib.auth.models import Group
 from django.contrib import messages
 from .models import CustomUser
 from myapp.models import Producto
-from myapp.forms import ContactoForm
 from .mixins import verificar_login_permiso, verificar_login
 
 # Create your views here.
@@ -32,18 +31,68 @@ def register_view(request):
 
 def LoginView(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+        
+        # Validaciones básicas
+        if not username:
+            messages.error(request, 'Por favor ingresa tu nombre de usuario.')
+            return render(request, 'login.html')
+        
+        if not password:
+            messages.error(request, 'Por favor ingresa tu contraseña.')
+            return render(request, 'login.html')
+        
+        # Verificar si el usuario existe
+        try:
+            user_obj = CustomUser.objects.get(username=username)
+        except CustomUser.DoesNotExist:
+            messages.error(request, f'El usuario "{username}" no existe.')
+            return render(request, 'login.html')
+        
+        # Verificar si está activo
+        if not user_obj.is_active:
+            messages.error(request, 'Tu cuenta está inactiva. Contacta al administrador.')
+            return render(request, 'login.html')
+        
+        # Autenticar usuario
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            # Verificar acceso admin si viene del admin
+            next_url = request.GET.get('next', '')
+            if '/admin/' in next_url and not user.is_staff:
+                messages.error(request, 'No tienes permisos para acceder al área administrativa.')
+                return render(request, 'login.html')
+            
             login(request, user)
-            return redirect('index')
+            messages.success(request, f'¡Bienvenido {username}!')
+            
+            # Redirigir
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('index')
         else:
-            messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo.')
+            messages.error(request, f'Contraseña incorrecta para "{username}".')
+    
     return render(request, 'login.html')
 
 def logout_view(request):
+    username = request.user.username if request.user.is_authenticated else None
+    
+    # Limpiar mensajes previos antes del logout
+    storage = messages.get_messages(request)
+    for _ in storage:
+        pass  # Esto consume/limpia los mensajes anteriores
+    
     logout(request)
+    
+    # Agregar solo el mensaje de despedida
+    if username:
+        messages.success(request, f'¡Hasta luego, {username}! Has cerrado sesión correctamente.')
+    else:
+        messages.info(request, 'Has cerrado sesión correctamente.')
+    
     return redirect('panel:login')
 
 def inventario_view(request):
@@ -57,7 +106,7 @@ def inventario_view(request):
 
 def crear_producto_view(request):
     """Vista para crear un nuevo producto en el inventario."""
-    resultado = verificar_login_permiso(request, 'myapp_login.InventarioView')
+    resultado = verificar_login_permiso(request, 'myapp_login.CrearProductoView')
     if resultado:
         return resultado
 
@@ -83,7 +132,7 @@ def crear_producto_view(request):
 
 def editar_producto_view(request, producto_id):
     """Vista para editar un producto existente en el inventario."""
-    resultado = verificar_login_permiso(request, 'myapp_login.InventarioView')
+    resultado = verificar_login_permiso(request, 'myapp_login.EditarProductoView')
     if resultado:
         return resultado
 
@@ -106,7 +155,7 @@ def editar_producto_view(request, producto_id):
 
 def eliminar_producto_view(request, producto_id):
     """Vista para eliminar un producto existente en el inventario."""
-    resultado = verificar_login_permiso(request, 'myapp_login.InventarioView')
+    resultado = verificar_login_permiso(request, 'myapp_login.EliminarProductoView')
     if resultado:
         return resultado
 
