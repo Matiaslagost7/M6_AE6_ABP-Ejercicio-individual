@@ -36,11 +36,6 @@ Este proyecto es una **plataforma web de gestión de inventario** desarrollada e
   - Gestión completa de grupos y permisos
   - Acceso total al inventario
 
-#### **Mati2000** 
-- **Tipo**: SuperUser (Alternativo)
-- **Contraseña**: [Definida por el administrador]
-- **Permisos**: Mismos que Mati7
-
 ---
 
 ### 👤 Usuarios Normales
